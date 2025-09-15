@@ -1,9 +1,4 @@
-import express, { Request, Response } from "express";
+import {app} from "./app";
 
-const app = express();
-
-app.get("/", (req: Request, res: Response) => {
-    res.send("Server running!");
-});
-
-export default app;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
