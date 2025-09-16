@@ -1,4 +1,5 @@
 import 'dotenv/config';
+
 import { z } from "zod";
 
 const Env = z.object({
@@ -12,5 +13,17 @@ const Env = z.object({
     HTTP_TIMEOUT_MS: z.coerce.number().int().positive().default(10000),
     BCRYPT_ROUNDS: z.coerce.number().int().min(10).max(14).default(12),
     PORT: z.coerce.number().int().positive().default(3000),
+    CORS_ORIGIN: z.string().default('*'),
+
 });
+
 export const env = Env.parse(process.env);
+
+// helper CORS
+export const corsAllowAll = env.CORS_ORIGIN.trim() === '*';
+export const corsOrigins = new Set(
+    env.CORS_ORIGIN
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean)
+);

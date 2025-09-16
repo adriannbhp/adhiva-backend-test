@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction,Request, Response } from 'express';
+
 import { container } from '../../../di/container';
 import type { LoginBody } from '../validators/auth';
 

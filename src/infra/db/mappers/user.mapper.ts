@@ -1,5 +1,5 @@
-import type { Prisma, User as DbUser } from '../../../generated/prisma';
 import type { User } from '../../../core/entities/user';
+import type { Prisma, User as DbUser } from '../../../generated/prisma';
 
 export const userSelect = {
     id: true, name: true, email: true, nim: true,

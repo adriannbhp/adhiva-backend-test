@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
+
 import { env } from "../../config/env";
-import type { TokenSigner } from '../../core/ports/services/token.signer';
+import type { TokenSigner } from '../../core/ports/services';
 
 function toSeconds(v: string | number): number {
     if (typeof v === 'number') return v;

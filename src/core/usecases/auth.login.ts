@@ -1,8 +1,8 @@
-import type { UserRepo } from '../ports/repos/user.repo';
-import type { PasswordHasher } from '../ports/services/password.hasher';
-import type { TokenSigner } from '../ports/services/token.signer';
 import type { LoginInput, LoginOutput } from '../dto/auth';
 import { AuthError } from '../errors';
+import type { UserRepo } from '../ports/repos';
+import type { PasswordHasher } from '../ports/services';
+import type { TokenSigner } from '../ports/services';
 
 export class AuthLogin {
     constructor(

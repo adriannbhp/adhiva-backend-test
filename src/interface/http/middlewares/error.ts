@@ -1,4 +1,5 @@
 import type { ErrorRequestHandler } from 'express';
+
 import { AppError, ValidationError } from '../../../core/errors';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -9,8 +10,8 @@ export const errorHandler: ErrorRequestHandler = (err: any, req, res, _next) => 
         if (err.code === 'P2025') err = new AppError('RECORD_NOT_FOUND', 404, 'Record not found');
     }
 
-    const status = (err as any).status ?? (err as any).statusCode ?? 500;
-    const code   = (err as any).code ?? 'INTERNAL';
+    const status = (err).status ?? (err).statusCode ?? 500;
+    const code   = (err).code ?? 'INTERNAL';
     const body: any = {
         code,
         message: err?.message ?? 'Internal error',
