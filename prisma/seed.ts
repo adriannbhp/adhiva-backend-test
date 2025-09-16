@@ -1,14 +1,30 @@
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
+import { PrismaClient } from '../src/generated/prisma';
+
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
-    const hash = await bcrypt.hash("Admin123!", 12)
+    const hash = await bcrypt.hash('Admin123!', 12);
+
     await prisma.user.upsert({
-        where: { email: "admin@gmail.com" },
+        where: { email: 'test@gmail.com' },
         update: {},
-        create: { name: "Admin", email: "admin@gmail.com", passwordHash: hash, role: "Admin", isActive: true },
+        create: {
+            name: 'test',
+            email: 'test@gmail.com',
+            password: hash,
+            nim: null,
+            isActive: true,
+        },
     });
 }
-main().finally(() => prisma.$disconnect());
+
+main()
+    .catch((e) => {
+        console.error(e);
+        process.exitCode = 1;
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
