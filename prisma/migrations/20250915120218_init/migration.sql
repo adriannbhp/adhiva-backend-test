@@ -6,7 +6,7 @@ CREATE TABLE "public"."users" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "email" CITEXT NOT NULL,
-    "passwordHash" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "nim" TEXT,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
