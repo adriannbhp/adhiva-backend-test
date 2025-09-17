@@ -21,7 +21,7 @@ export function toDomain(row: Pick<DbUser, keyof typeof userSelect>): User {
         id: row.id,
         name: row.name,
         email: row.email.toLowerCase(),
-        nim: row.nim ?? null,
+        nim: row.nim ?? '',
         isActive: row.isActive,
         createdAt: row.createdAt,
         updatedAt: row.updatedAt,

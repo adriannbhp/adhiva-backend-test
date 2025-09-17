@@ -4,7 +4,7 @@ export type CreateUserInput = {
     name: string;
     email: string;
     password: string;
-    nim?: string | null;
+    nim?: string ;
 };
 
 export type UpdateUserInput = {
@@ -12,7 +12,7 @@ export type UpdateUserInput = {
     name?: string;
     email?: string;
     password?: string;
-    nim?: string | null;
+    nim?: string ;
     isActive?: boolean;
 };
 

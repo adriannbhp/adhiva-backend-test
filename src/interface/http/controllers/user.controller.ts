@@ -21,15 +21,29 @@ export async function deleteUser(req: Request, res: Response, next: NextFunction
         const id = Number(req.params.id);
         await container.usecases.userDelete.execute(id);
         res.status(204).send();
-    } catch (e) { next(e); }
+    } catch (e) {
+        next(e);
+    }
+}
+
+export async function deletePermanent(req: Request, res: Response, next: NextFunction) {
+    try {
+        const id = Number(req.params.id);
+        await container.usecases.userDelete.executePermanent(id);
+        res.status(204).send();
+    } catch (e) {
+        next(e);
+    }
 }
 
 export async function getUser(req: Request, res: Response, next: NextFunction) {
     try {
         const id = Number(req.params.id);
-        const out = await container.usecases.userGet.execute(id);
-        res.json(out);
-    } catch (e) { next(e); }
+        const user = await container.usecases.userGet.execute(id);
+        res.json(user);
+    } catch (err) {
+        next(err);
+    }
 }
 
 export async function listUsers(req: Request, res: Response, next: NextFunction) {

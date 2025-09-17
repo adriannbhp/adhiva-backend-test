@@ -14,7 +14,11 @@ export class PrismaUserRepo implements UserRepo {
 
     async findAuthByEmail(email: string): Promise<UserWithSecret | null> {
         const row = await prisma.user.findUnique({
-            where: { email: email.toLowerCase() },
+            where: {
+                email: email.toLowerCase(),
+                isActive: true,
+            }
+            ,
             select: userAuthSelect,
         });
         if (!row) return null;
@@ -23,8 +27,11 @@ export class PrismaUserRepo implements UserRepo {
     }
 
     async findById(id: number): Promise<User | null> {
-        const row = await prisma.user.findUnique({
-            where: { id },
+        const row = await prisma.user.findFirst({
+            where: {
+                id,
+                isActive: true,
+            },
             select: userSelect,
         });
         return row ? toDomain(row as any) : null;
@@ -49,7 +56,7 @@ export class PrismaUserRepo implements UserRepo {
             prisma.user.count({ where }),
         ]);
 
-        return { data: rows.map((r: any) => toDomain(r)), total }; // <- tambahkan anotasi (r: any) biar TS7006 hilang
+        return { data: rows.map((r: any) => toDomain(r)), total };
     }
 
     async create(data: { name: string; email: string; password: string; nim?: string | null }): Promise<User> {
@@ -89,5 +96,11 @@ export class PrismaUserRepo implements UserRepo {
             data: { isActive: false },
             select: { id: true },
         });
+    }
+
+    async delete(id: number): Promise<void> {
+        await prisma.user.delete({
+            where: { id },
+        })
     }
 }

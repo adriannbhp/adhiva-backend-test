@@ -16,7 +16,7 @@ app.use(helmet());
 
 if (process.env.NODE_ENV !== 'production') app.use(logger);
 
-app.use(express.json()); // default: type = application/json
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsHandler = cors(

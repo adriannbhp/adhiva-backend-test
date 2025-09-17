@@ -13,7 +13,7 @@ export class UserCreate {
                 name: input.name,
                 email: input.email,
                 password,
-                nim: input.nim ?? null,
+                nim: input.nim,
             });
         } catch (e: any) {
             if (e?.code === 'P2002') throw new AppError('EMAIL_TAKEN', 409, 'Email already in use');

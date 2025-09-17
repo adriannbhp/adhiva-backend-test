@@ -2,7 +2,7 @@ export type User = {
     id: number;
     name: string;
     email: string;
-    nim: string | null;
+    nim: string;
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
