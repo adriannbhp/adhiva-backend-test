@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "07760137-4913-4d02-8e9a-f2ea781fbe92",
+		"name": "Coding Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24398161"
+	},
+	"item": [
+		{
+			"name": "A",
+			"item": [
+				{
+					"name": "B",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "C",
+			"item": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"Admin123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNzU4MDI3NzUyLCJleHAiOjE3NTgwMzQ5NTIsInN1YiI6IjEifQ.DRf3Te7ka5md7bcTPWegLM9pkSAC-v6YTs6H6ZOOVkU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"test@gmail.com\",\r\n    \"password\" : \"Admin123\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNzU4MDc4NTUyLCJleHAiOjE3NTgwODU3NTIsInN1YiI6IjEifQ.Vi2idQjiE30rZFOlguApgwXVlDu6A9cYkUdkxLXHrks",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Budi Santoso33\",\r\n  \"email\": \"budi33@gmail.com\",\r\n  \"password\": \"Admin123!\",\r\n  \"nim\": \"123456\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "YMD",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNzU4MDc4NTUyLCJleHAiOjE3NTgwODU3NTIsInN1YiI6IjEifQ.Vi2idQjiE30rZFOlguApgwXVlDu6A9cYkUdkxLXHrks",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/search/ymd?value=20220713",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search",
+						"ymd"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "20220713"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Nama",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNzU4MDc4NTUyLCJleHAiOjE3NTgwODU3NTIsInN1YiI6IjEifQ.Vi2idQjiE30rZFOlguApgwXVlDu6A9cYkUdkxLXHrks",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/search/nama?value=Evans Chloe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search",
+						"nama"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "Evans Chloe"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
