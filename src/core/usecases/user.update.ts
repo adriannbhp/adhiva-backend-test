@@ -17,7 +17,7 @@ export class UserUpdate {
             ...(input.name !== undefined ? { name: input.name } : {}),
             ...(input.email !== undefined ? { email: input.email } : {}),
             ...(password !== undefined ? { password } : {}),
-            ...(input.nim !== undefined ? { nim: input.nim } : {}), // null valid
+            ...(input.nim !== undefined ? { nim: input.nim } : {}),
             ...(input.isActive !== undefined ? { isActive: input.isActive } : {}),
         });
     }

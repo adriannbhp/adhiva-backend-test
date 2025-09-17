@@ -10,6 +10,7 @@ import { UserUpdate } from '../core/usecases/user.update';
 import { UserDelete } from '../core/usecases/user.delete';
 import { UserGet } from '../core/usecases/user.get';
 import { UserList } from '../core/usecases/user.list';
+import { SearchUsecase } from "../core/usecases/search";
 
 const userRepo: UserRepo = new PrismaUserRepo();
 const hasher = new BcryptHasher();
@@ -25,6 +26,7 @@ export const container = Object.freeze({
         userDelete: new UserDelete(userRepo),
         userGet: new UserGet(userRepo),
         userList: new UserList(userRepo),
+        search: new SearchUsecase(),
     },
 });
 

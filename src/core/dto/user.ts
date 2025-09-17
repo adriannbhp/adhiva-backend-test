@@ -18,8 +18,8 @@ export type UpdateUserInput = {
 
 export type FindUsersInput = {
     q?: string;
-    page?: number;   // 1-based
-    limit?: number;  // per page
+    page?: number;
+    limit?: number;
 };
 
 export type PaginatedUsersOutput = {

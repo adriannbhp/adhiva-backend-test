@@ -23,8 +23,7 @@ const Env = z.object({
             v ? v.split(',').map((s) => s.trim()).filter(Boolean) : [],
         ),
 
-    // Optional external API
-    EXTERNAL_API_URL: z.string().url().optional(),
+    EXTERNAL_API_URL: z.string().url().min(1, 'EXTERNAL_API_URL is required'),
 });
 
 const parsed = Env.safeParse(process.env);

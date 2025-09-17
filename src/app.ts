@@ -7,6 +7,7 @@ import { logger } from './interface/http/middlewares/logger';
 import { notFound } from './interface/http/middlewares/not-found';
 import authRoutes from './interface/http/routes/auth.routes';
 import usersRoutes from './interface/http/routes/user.routes';
+import searchRoutes from './interface/http/routes/search.routes';
 import { corsAllowAll, corsOrigins } from './config/env';
 
 export const app = express();
@@ -35,6 +36,7 @@ app.use(corsHandler);
 app.get('/', (_req, res) => res.json({ ok: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/search', searchRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

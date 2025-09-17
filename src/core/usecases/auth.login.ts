@@ -13,7 +13,7 @@ export class AuthLogin {
 
     async execute({ email, password }: LoginInput): Promise<LoginOutput> {
         const u = await this.users.findAuthByEmail(email.trim().toLowerCase());
-        if (!u || !u.password) throw new AuthError();      // ⬅️ guard
+        if (!u || !u.password) throw new AuthError();
 
         const ok = await this.hasher.compare(password, u.password);
         if (!ok) throw new AuthError();

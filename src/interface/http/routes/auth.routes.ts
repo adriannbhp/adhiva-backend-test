@@ -8,4 +8,5 @@ import { loginSchema } from '../validators/auth';
 const r = Router();
 
 r.post('/login', loginLimiter, validate(loginSchema), login);
+
 export default r;
