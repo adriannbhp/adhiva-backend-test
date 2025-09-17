@@ -1,43 +1,31 @@
-import type { UserRepo } from '../core/ports/repos';
-import type { PasswordHasher } from '../core/ports/services';
-import type { TokenSigner } from '../core/ports/services';
-import { AuthLogin } from '../core/usecases/auth.login';
-import { prisma } from '../infra/db/prisma.client';
-import { PrismaUserRepo } from '../infra/db/prisma.user.repo';
+import { PrismaUserRepo } from '../infra/db';
 import { BcryptHasher } from '../infra/security/bcrypt.hasher';
 import { JwtSigner } from '../infra/security/jwt.signer';
 
-export type Repos = { user: UserRepo };
-export type Services = { hasher: PasswordHasher; token: TokenSigner };
-export type Usecases = { authLogin: AuthLogin };
-export type Container = {
-    prisma: typeof prisma;
-    repos: Repos;
-    services: Services;
-    usecases: Usecases;
-};
+import type { UserRepo } from '../core/ports/repos';
 
-export function createContainer(
-    overrides?: Partial<{ repos: Partial<Repos>; services: Partial<Services> }>
-): Container {
-    // adapters & services default
-    const userRepo: UserRepo = overrides?.repos?.user ?? new PrismaUserRepo();
-    const hasher: PasswordHasher = overrides?.services?.hasher ?? new BcryptHasher();
-    const token: TokenSigner = overrides?.services?.token ?? new JwtSigner();
+import { AuthLogin } from '../core/usecases/auth.login';
+import { UserCreate } from '../core/usecases/user.create';
+import { UserUpdate } from '../core/usecases/user.update';
+import { UserDelete } from '../core/usecases/user.delete';
+import { UserGet } from '../core/usecases/user.get';
+import { UserList } from '../core/usecases/user.list';
 
-    const usecases: Usecases = {
+const userRepo: UserRepo = new PrismaUserRepo();
+const hasher = new BcryptHasher();
+const token = new JwtSigner();
+
+export const container = Object.freeze({
+    repos: { user: userRepo },
+    services: { hasher, token },
+    usecases: {
         authLogin: new AuthLogin(userRepo, hasher, token),
-    };
+        userCreate: new UserCreate(userRepo, hasher),
+        userUpdate: new UserUpdate(userRepo, hasher),
+        userDelete: new UserDelete(userRepo),
+        userGet: new UserGet(userRepo),
+        userList: new UserList(userRepo),
+    },
+});
 
-    const container: Container = {
-        prisma,
-        repos: { user: userRepo },
-        services: { hasher, token },
-        usecases,
-    };
-
-    return Object.freeze(container);
-}
-
-// ---- Singleton untuk app runtime ----
-export const container = createContainer();
+export type Container = typeof container;

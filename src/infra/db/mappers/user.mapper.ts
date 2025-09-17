@@ -2,8 +2,13 @@ import type { User } from '../../../core/entities/user';
 import type { Prisma, User as DbUser } from '../../../generated/prisma';
 
 export const userSelect = {
-    id: true, name: true, email: true, nim: true,
-    isActive: true, createdAt: true, updatedAt: true,
+    id: true,
+    name: true,
+    email: true,
+    nim: true,
+    isActive: true,
+    createdAt: true,
+    updatedAt: true,
 } satisfies Prisma.UserSelect;
 
 export const userAuthSelect = {
