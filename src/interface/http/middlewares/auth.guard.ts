@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
 import { container } from "../../../di/container";
-import { AppError } from "./error";
 import type { Role } from "../../../core/auth/permissions";
+import {AppError} from "../../../core/errors";
 
 export type AuthUser = { id: number; email: string; name: string; role?: Role };
 

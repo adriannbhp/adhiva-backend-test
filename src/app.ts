@@ -9,7 +9,6 @@ import searchRoutes from './interface/http/routes/search.routes';
 import { corsAllowAll, corsOrigins } from './config/env';
 import {pinoHttp} from "pino-http";
 import { randomUUID } from "crypto";
-import {responseHelpers} from "./interface/http/middlewares/response";
 
 export const app = express();
 
@@ -41,7 +40,6 @@ const corsHandler = cors(
 );
 
 app.use(corsHandler);
-app.use(responseHelpers);
 
 app.get('/', (_req, res) => res.json({ ok: true }));
 app.use('/api/auth', authRoutes);

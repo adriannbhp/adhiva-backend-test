@@ -1,7 +1,7 @@
 import type { CreateUserInput, UserOutput } from '../dto';
 import type { UserRepo } from '../ports/repos';
 import type { PasswordHasher } from '../ports/services';
-import { AppError } from '../errors';
+import { ConflictError } from '../errors';
 
 export class UserCreate {
     constructor(private users: UserRepo, private hasher: PasswordHasher) {}
@@ -15,7 +15,9 @@ export class UserCreate {
                 password,
             });
         } catch (e: any) {
-            if (e?.code === 'P2002') throw new AppError('EMAIL_TAKEN', 409, 'Email already in use');
+            if (e?.code === 'P2002') {
+                throw new ConflictError('Email already in use');
+            }
             throw e;
         }
     }
