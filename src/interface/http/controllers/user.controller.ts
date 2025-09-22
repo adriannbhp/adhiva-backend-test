@@ -1,26 +1,46 @@
-import type { Request, Response, NextFunction } from 'express';
-import { container } from '../../../di/container';
+import type { Request, Response, NextFunction } from "express";
+import { container } from "../../../di/container";
+import {
+    CreateUserSchema,
+    UpdateUserSchema,
+    ListUserSchema,
+    ParamIdSchema,
+} from "../../../core/dto";
+import { ZodError } from "zod";
 
 export async function createUser(req: Request, res: Response, next: NextFunction) {
     try {
-        const out = await container.usecases.userCreate.execute(req.body);
-        res.status(201).json(out);
-    } catch (e) { next(e); }
+        const input = CreateUserSchema.parse(req.body);
+        const out = await container.usecases.userCreate.execute(input);
+        return res.created(out); // 201 { code, message, data }
+    } catch (e) {
+        if (e instanceof ZodError) {
+            return res.status(400).json({
+                code: "VALIDATION_ERROR",
+                message: "Validation failed",
+                meta: { errors: e.flatten() },
+            });
+        }
+        next(e);
+    }
 }
 
 export async function updateUser(req: Request, res: Response, next: NextFunction) {
     try {
-        const id = Number(req.params.id);
-        const out = await container.usecases.userUpdate.execute({ id, ...req.body });
-        res.json(out);
-    } catch (e) { next(e); }
+        const { id } = ParamIdSchema.parse(req.params);
+        const body = UpdateUserSchema.parse(req.body);
+        const out = await container.usecases.userUpdate.execute({ id, ...body });
+        return res.ok(out); // 200 { code, message, data }
+    } catch (e) {
+        next(e);
+    }
 }
 
 export async function deleteUser(req: Request, res: Response, next: NextFunction) {
     try {
         const id = Number(req.params.id);
         await container.usecases.userDelete.execute(id);
-        res.status(204).send();
+        return res.noContent(); // 204
     } catch (e) {
         next(e);
     }
@@ -30,7 +50,7 @@ export async function deletePermanent(req: Request, res: Response, next: NextFun
     try {
         const id = Number(req.params.id);
         await container.usecases.userDelete.executePermanent(id);
-        res.status(204).send();
+        return res.noContent(); // 204
     } catch (e) {
         next(e);
     }
@@ -40,7 +60,7 @@ export async function getUser(req: Request, res: Response, next: NextFunction) {
     try {
         const id = Number(req.params.id);
         const user = await container.usecases.userGet.execute(id);
-        res.json(user);
+        return res.ok(user); // 200
     } catch (err) {
         next(err);
     }
@@ -48,7 +68,10 @@ export async function getUser(req: Request, res: Response, next: NextFunction) {
 
 export async function listUsers(req: Request, res: Response, next: NextFunction) {
     try {
-        const out = await container.usecases.userList.execute(req.query as any);
-        res.json(out);
-    } catch (e) { next(e); }
+        const query = ListUserSchema.parse(req.query);
+        const out = await container.usecases.userList.execute(query);
+        return res.ok(out); // 200
+    } catch (e) {
+        next(e);
+    }
 }

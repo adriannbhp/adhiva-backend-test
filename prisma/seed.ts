@@ -14,7 +14,6 @@ async function main() {
             name: 'test',
             email: 'test@gmail.com',
             password: hash,
-            nim: null,
             isActive: true,
         },
     });

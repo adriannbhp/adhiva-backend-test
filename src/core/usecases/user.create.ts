@@ -1,4 +1,4 @@
-import type { CreateUserInput, UserOutput } from '../dto/user';
+import type { CreateUserInput, UserOutput } from '../dto';
 import type { UserRepo } from '../ports/repos';
 import type { PasswordHasher } from '../ports/services';
 import { AppError } from '../errors';
@@ -13,7 +13,6 @@ export class UserCreate {
                 name: input.name,
                 email: input.email,
                 password,
-                nim: input.nim,
             });
         } catch (e: any) {
             if (e?.code === 'P2002') throw new AppError('EMAIL_TAKEN', 409, 'Email already in use');

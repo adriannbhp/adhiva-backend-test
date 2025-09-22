@@ -1,19 +1,19 @@
-import type { Request, Response, NextFunction } from 'express';
-import type { ZodTypeAny } from 'zod';
-import { ValidationError } from '../../../core/errors';
+import type { Request, Response, NextFunction } from "express";
+import type { ZodSchema } from "zod";
 
-export function validate(schema: ZodTypeAny, part: 'body' | 'query' | 'params' = 'body') {
+export function validate<T>(schema: ZodSchema<T>, source: "body"|"params"|"query") {
     return (req: Request, res: Response, next: NextFunction) => {
-        const source =
-            part === 'body' ? (req.body ?? {}) :
-                part === 'query' ? (req.query ?? {}) :
-                    (req.params ?? {});
-        const parsed = schema.safeParse(source);
-        if (!parsed.success) {
-            const details = { ...parsed.error.flatten(), issues: parsed.error.issues };
-            return next(new ValidationError(details));
+        try {
+            const raw = source === "body" ? req.body : source === "params" ? req.params : req.query;
+            const parsed = schema.parse(raw);
+
+            if (source === "body") (req as any).body = parsed;
+            else if (source === "params") (req as any).params = parsed;
+            else res.locals.query = parsed;
+
+            next();
+        } catch (e) {
+            next(e);
         }
-        (res.locals.input ??= {})[part] = parsed.data;
-        next();
     };
 }

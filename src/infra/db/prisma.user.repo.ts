@@ -26,16 +26,17 @@ export class PrismaUserRepo implements UserRepo {
         return { ...pub, password: (row as any).password };
     }
 
-    async findById(id: number): Promise<User | null> {
+    async findById(id: number, opts?: { includeInactive?: boolean }) {
         const row = await prisma.user.findFirst({
             where: {
                 id,
-                isActive: true,
+                ...(opts?.includeInactive ? {} : { isActive: true }),
             },
             select: userSelect,
         });
-        return row ? toDomain(row as any) : null;
+        return row ? toDomain(row) : null;
     }
+
 
     async findMany(params: { q?: string; skip: number; take: number })
         : Promise<{ data: User[]; total: number }> {
@@ -65,7 +66,6 @@ export class PrismaUserRepo implements UserRepo {
                 name: data.name,
                 email: data.email.toLowerCase(),
                 password: data.password,
-                nim: data.nim ?? null,
             },
             select: userSelect,
         });
@@ -74,7 +74,7 @@ export class PrismaUserRepo implements UserRepo {
 
     async update(
         id: number,
-        data: { name?: string; email?: string; password?: string; nim?: string | null; isActive?: boolean },
+        data: { name?: string; email?: string; password?: string; isActive?: boolean },
     ): Promise<User> {
         const row = await prisma.user.update({
             where: { id },
@@ -82,7 +82,6 @@ export class PrismaUserRepo implements UserRepo {
                 ...(data.name != null ? { name: data.name } : {}),
                 ...(data.email != null ? { email: data.email.toLowerCase() } : {}),
                 ...(data.password != null ? { password: data.password } : {}),
-                ...(data.nim !== undefined ? { nim: data.nim } : {}),
                 ...(data.isActive != null ? { isActive: data.isActive } : {}),
             },
             select: userSelect,

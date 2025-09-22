@@ -1,5 +1,5 @@
 import type { UserRepo } from '../ports/repos';
-import type { FindUsersInput, PaginatedUsersOutput } from '../dto/user';
+import type { FindUsersInput, PaginatedUsersOutput } from '../dto';
 
 export class UserList {
     constructor(private users: UserRepo) {}

@@ -1,5 +1,5 @@
 import type { UserRepo } from '../ports/repos';
-import type { UserOutput } from '../dto/user';
+import type { UserOutput } from '../dto';
 import { NotFoundError } from '../errors';
 
 export class UserGet {

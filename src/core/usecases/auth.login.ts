@@ -1,4 +1,4 @@
-import type { LoginInput, LoginOutput } from '../dto/auth';
+import type { LoginInput, LoginOutput } from '../dto';
 import { AuthError } from '../errors';
 import type { UserRepo } from '../ports/repos';
 import type { PasswordHasher } from '../ports/services';
@@ -18,6 +18,6 @@ export class AuthLogin {
         const ok = await this.hasher.compare(password, u.password);
         if (!ok) throw new AuthError();
 
-        return { accessToken: this.token.sign({ id: u.id, email: u.email, name: u.name }, String(u.id)) };
+        return { accessToken: this.token.sign({ id: u.id, email: u.email, name: u.name, role: u.role }, String(u.id)) };
     }
 }

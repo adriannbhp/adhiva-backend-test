@@ -1,12 +1,12 @@
 import type { User } from '../../../core/entities/user';
-import type { Prisma, User as DbUser } from '../../../generated/prisma';
+import type { Prisma, User as DbUser } from '@prisma/client';
 
 export const userSelect = {
     id: true,
     name: true,
     email: true,
-    nim: true,
     isActive: true,
+    role: true,
     createdAt: true,
     updatedAt: true,
 } satisfies Prisma.UserSelect;
@@ -21,8 +21,8 @@ export function toDomain(row: Pick<DbUser, keyof typeof userSelect>): User {
         id: row.id,
         name: row.name,
         email: row.email.toLowerCase(),
-        nim: row.nim ?? '',
         isActive: row.isActive,
+        role: row.role as "USER" | "ADMIN",
         createdAt: row.createdAt,
         updatedAt: row.updatedAt,
     };

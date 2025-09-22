@@ -1,11 +1,11 @@
 import { NextFunction,Request, Response } from 'express';
 
 import { container } from '../../../di/container';
-import type { LoginBody } from '../validators/auth';
+import { parseLogin } from '../../../core/dto';
 
 export async function login(req: Request, res: Response, next: NextFunction) {
     try {
-        const { email, password } = req.body as LoginBody;
+        const { email, password } = parseLogin(req.body);
         const out = await container.usecases.authLogin.execute({ email, password });
         res.json(out);
     } catch (err) {

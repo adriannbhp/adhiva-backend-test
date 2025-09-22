@@ -2,8 +2,8 @@ export type User = {
     id: number;
     name: string;
     email: string;
-    nim: string;
     isActive: boolean;
+    role: "USER" | "ADMIN";
     createdAt: Date;
     updatedAt: Date;
 }
